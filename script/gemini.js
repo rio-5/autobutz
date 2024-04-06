@@ -4,7 +4,7 @@ module.exports.config = {
   role: 0,
   hasPrefix: false,
   aliases: ['gpt', 'openai'],
-  description: "Gemini AI",
+  description: "An AI command powered by GPT-4",
   usage: "gemini [promot]",
   credits: 'james',
   cooldown: 3,
@@ -43,6 +43,6 @@ module.exports.run = async function ({
     const result = await axios.get(apiUrl + "/gemini?prompt=" + prompt + "&uid=" + uid);
     return api.sendMessage(result.data.gemini, threadID, messageID);
   } catch (e) {
-    api.sendMessage("error", threadID, messageID)
+    api.sendMessage(e, threadID, messageID)
   }
 }
