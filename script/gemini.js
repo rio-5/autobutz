@@ -4,7 +4,7 @@ module.exports.config = {
   role: 0,
   hasPrefix: false,
   aliases: ['gpt', 'openai'],
-  description: "An AI command powered by GPT-4",
+  description: "Gemini AI",
   usage: "gemini [promot]",
   credits: 'james',
   cooldown: 3,
@@ -35,8 +35,13 @@ module.exports.run = async function ({
         url = encodeURIComponent(event.messageReply.attachments[0].url);
         const res = await axios.get(apiUrl + "/gemini?prompt=" + prompt + "&uid=" + uid + "&url=" + url);
         return api.sendMessage(res.data.gemini, threadID, messageID);
-      }
+      } else{
+        return api.sendMessage("please reply to an image", threadID, messageID);
+      };
     };
+    
+    const result = await axios.get(apiUrl + "/gemini?prompt=" + prompt + "&uid=" + uid);
+    return api.sendMessage(result.data.gemini, threadID, messageID);
   } catch (e) {
     api.sendMessage("error", threadID, messageID)
   }
